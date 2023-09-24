@@ -131,3 +131,34 @@ function Circle(radius){
 
 const circle5 = new Circle(5);
 circle5.draw();
+
+
+// 12 - Getters and Setters
+function Circle(radius){
+    this.radius = radius;
+    let defaultLocation = {x: 0, y: 0}; // private property
+    let computeOptimumLocation = function(factor){  // private method
+        // ...
+        console.log('computeOptimumLocation', factor); 
+    }
+    this.draw = function(){
+        computeOptimumLocation(0.1);
+        console.log('defaultLocation', defaultLocation);
+        console.log('draw', this.radius);
+    }
+    Object.defineProperty(this, 'defaultLocation', {
+        get: function(){
+            return defaultLocation;
+        },
+        set: function(value){
+            if (!value.x || !value.y)
+                throw new Error('Invalid location.');
+            defaultLocation = value;
+        }
+    });
+}
+
+const circle6 = new Circle(6);
+circle6.draw();
+circle6.defaultLocation = {x: 11, y: 12};
+console.log(circle6.defaultLocation);
