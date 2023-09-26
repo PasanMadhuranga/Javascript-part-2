@@ -143,3 +143,94 @@ Circle5.prototype.duplicate = function(){
 const c5 = new Circle5(5);
 console.log(c5);
 console.log(c5.duplicate()); // duplicate circle
+
+
+// 6 - polymorphism
+function Circle6(radius){
+    this.radius = radius;
+}
+
+function Square2(size){
+    this.size = size;
+}
+
+function Shape6(color){
+    this.color = color;
+}
+
+Circle6.prototype.draw = function(){
+    console.log('draw');
+}
+
+Shape6.prototype.duplicate = function(){
+    console.log('duplicate');
+}
+
+extend(Circle6, Shape6);
+extend(Square2, Shape6);
+
+Circle6.prototype.duplicate = function(){
+    console.log('duplicate circle');
+}
+
+Square2.prototype.duplicate = function(){
+    console.log('duplicate square');
+}
+
+const shapes = [
+    new Circle6(),
+    new Square2()
+];
+
+for(let shape of shapes){
+    shape.duplicate();
+} 
+
+
+// 7 - when to use inheritance
+// composition is better than inheritance
+// use inheritance when you have a relationship between two objects
+// use composition when you have two objects that can work independently
+// avoid creating inheritance hierarchies
+
+
+// 8 - mixins
+function mixin(target, ...sources){
+    Object.assign(target, ...sources);
+}
+
+const canEat = {
+    eat: function(){
+        this.hunger--;
+        console.log('eating');
+    }
+};
+
+const canWalk = {
+    walk: function(){
+        console.log('walking');
+    }
+};
+
+const canSwim = {
+    swim: function(){
+        console.log('swimming');
+    }
+};
+
+function Person(){
+
+}
+
+function Goldfish(){
+    
+}
+
+mixin(Person.prototype, canEat, canWalk);
+mixin(Goldfish.prototype, canEat, canSwim);
+
+const person = new Person();
+const goldfish = new Goldfish();
+
+console.log(person);
+console.log(goldfish);
